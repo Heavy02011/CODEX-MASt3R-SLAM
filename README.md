@@ -77,6 +77,15 @@ When running on NVIDIA Jetson Orin devices, the CUDA extension needs to compile
 for compute capability 8.7.  The provided `setup.py` includes the `sm_87`
 architecture flag so it can be built with the JetPack CUDA toolkit.
 
+## Raspberry Pi 5
+The Raspberry&nbsp;Pi&nbsp;5 does not provide CUDA support. When installing on this
+platform the build will skip the CUDA extension and use slower CPU
+implementations for `iter_proj` and `refine_matches`. Functions related to pose
+optimisation (`gauss_newton_rays` and `gauss_newton_calib`) are currently not
+implemented for CPU and will raise a `NotImplementedError` if called.
+Install PyTorch for ARM64 and run `pip install --no-build-isolation -e .` to
+install the package.
+
 ## Examples
 ```
 bash ./scripts/download_tum.sh
