@@ -45,7 +45,8 @@ if has_cuda:
         )
     ]
 else:
-    print("CUDA not found, cannot compile backend!")
+    print("CUDA not found, building without backend extension")
+    ext_modules = []
 
 setup(
     ext_modules=ext_modules,

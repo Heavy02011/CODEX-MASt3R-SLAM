@@ -2,7 +2,7 @@ import torch
 import torch.nn.functional as F
 import mast3r_slam.image as img_utils
 from mast3r_slam.config import config
-import mast3r_slam_backends
+from mast3r_slam.backends import iter_proj, refine_matches
 
 
 def match(X11, X21, D11, D21, idx_1_to_2_init=None):
@@ -57,7 +57,7 @@ def match_iterative_proj(X11, X21, D11, D21, idx_1_to_2_init=None):
     rays_with_grad_img, pts3d_norm, p_init = prep_for_iter_proj(
         X11, X21, idx_1_to_2_init
     )
-    p1, valid_proj2 = mast3r_slam_backends.iter_proj(
+    p1, valid_proj2 = iter_proj(
         rays_with_grad_img,
         pts3d_norm,
         p_init,
@@ -76,7 +76,7 @@ def match_iterative_proj(X11, X21, D11, D21, idx_1_to_2_init=None):
     valid_proj2 = valid_proj2 & valid_dists2
 
     if cfg["radius"] > 0:
-        (p1,) = mast3r_slam_backends.refine_matches(
+        (p1,) = refine_matches(
             D11.half(),
             D21.view(b, h * w, -1).half(),
             p1,
