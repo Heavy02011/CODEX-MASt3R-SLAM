@@ -72,6 +72,11 @@ git checkout windows
 ```
 This disables multiprocessing which causes an issue with shared memory as discussed [here](https://github.com/rmurai0610/MASt3R-SLAM/issues/21).
 
+## Jetson Orin
+When running on NVIDIA Jetson Orin devices, the CUDA extension needs to compile
+for compute capability 8.7.  The provided `setup.py` includes the `sm_87`
+architecture flag so it can be built with the JetPack CUDA toolkit.
+
 ## Examples
 ```
 bash ./scripts/download_tum.sh
